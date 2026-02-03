@@ -72,7 +72,6 @@ html {
 input:focus, textarea:focus {
     box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
 }
-
 /* Test Card Selection Styles */
 .test-card {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -90,6 +89,24 @@ input:focus, textarea:focus {
     transform: scale(1.02);
 }
 
+/* Tests Container Scrollbar */
+#tests-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+#tests-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+#tests-container::-webkit-scrollbar-thumb {
+    background: #1e3a8a;
+    border-radius: 10px;
+}
+
+#tests-container::-webkit-scrollbar-thumb:hover {
+    background: #1e40af;
+}
 /* Booking Card Styles */
 .booking-card {
     background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
@@ -191,7 +208,6 @@ button:active {
 .nav-btn.active svg {
     stroke-width: 2.5;
 }
-
 /* Toast Notification */
 .toast {
     position: fixed;
@@ -217,6 +233,25 @@ button:active {
     transform: translateX(-50%) translateY(0);
 }
 
+/* Success Notification Animation */
+@keyframes slide-down-fade {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#booking-success-notification {
+    animation: slide-down-fade 0.5s ease-out;
+}
+
+#booking-success-notification.hidden {
+    display: none;
+}
 /* Status Badges */
 .status-badge {
     display: inline-flex;

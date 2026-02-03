@@ -10,24 +10,45 @@ const TELEGRAM_CONFIG = {
     botToken: '8373148284:AAHTTSTJbyAs-xTyEyEekn_hqyUErP4rA34',
     chatId: '-1003885937352'
 };
-
 // Test Options Data
 const TEST_OPTIONS = [
-    { id: 'rbc', name: 'RBC', icon: 'droplet', desc: 'اختبار كريات الدم الحمراء' },
-    { id: 'cbc', name: 'CBC', icon: 'activity', desc: 'تعداد الدم الكامل' },
-    { id: 'bp', name: 'Blood Pressure', icon: 'heart', desc: 'قياس ضغط الدم' },
-    { id: 'sugar', name: 'Blood Sugar', icon: 'trending-up', desc: 'اختبار سكر الدم' },
-    { id: 'cancer', name: 'Cancer Markers', icon: 'shield', desc: 'مؤشرات السرطان' },
-    { id: 'other', name: 'Other', icon: 'plus', desc: 'فحص آخر (حدد النوع)' }
+    { id: 'cbc', name: 'تعداد الدم الكامل', icon: 'activity', desc: 'CBC - Complete Blood Count' },
+    { id: 'rbc', name: 'كريات الدم الحمراء', icon: 'droplet', desc: 'RBC - Red Blood Cells' },
+    { id: 'wbc', name: 'كريات الدم البيضاء', icon: 'shield', desc: 'WBC - White Blood Cells' },
+    { id: 'platelets', name: 'الصفائح الدموية', icon: 'droplet', desc: 'Platelets Count' },
+    { id: 'hemoglobin', name: 'الهيموغلوبين', icon: 'heart', desc: 'Hemoglobin Level' },
+    { id: 'blood-pressure', name: 'ضغط الدم', icon: 'activity', desc: 'Blood Pressure Measurement' },
+    { id: 'blood-sugar', name: 'سكر الدم', icon: 'trending-up', desc: 'Blood Glucose Test' },
+    { id: 'hba1c', name: 'السكر التراكمي', icon: 'trending-up', desc: 'HbA1c - Glycated Hemoglobin' },
+    { id: 'lipid-profile', name: 'الدهون في الدم', icon: 'droplet', desc: 'Lipid Profile - Cholesterol & Triglycerides' },
+    { id: 'liver-function', name: 'وظائف الكبد', icon: 'activity', desc: 'Liver Function Tests' },
+    { id: 'kidney-function', name: 'وظائف الكلى', icon: 'droplet', desc: 'Kidney Function Tests' },
+    { id: 'thyroid', name: 'الغدة الدرقية', icon: 'activity', desc: 'Thyroid Function Tests' },
+    { id: 'uric-acid', name: 'حمض اليوريك', icon: 'droplet', desc: 'Uric Acid Level' },
+    { id: 'vitamin-d', name: 'فيتامين د', icon: 'sun', desc: 'Vitamin D Level' },
+    { id: 'vitamin-b12', name: 'فيتامين ب12', icon: 'activity', desc: 'Vitamin B12 Level' },
+    { id: 'iron', name: 'الحديد والفيريتين', icon: 'droplet', desc: 'Iron & Ferritin Levels' },
+    { id: 'calcium', name: 'الكالسيوم', icon: 'activity', desc: 'Calcium Level' },
+    { id: 'phosphorus', name: 'الفوسفور', icon: 'droplet', desc: 'Phosphorus Level' },
+    { id: 'urine-analysis', name: 'تحليل البول', icon: 'droplet', desc: 'Urine Analysis' },
+    { id: 'stool-analysis', name: 'تحليل البراز', icon: 'activity', desc: 'Stool Analysis' },
+    { id: 'tumor-markers', name: 'مؤشرات الأورام', icon: 'shield', desc: 'Tumor Markers' },
+    { id: 'psa', name: 'مستضد البروستاتا', icon: 'activity', desc: 'PSA - Prostate Specific Antigen' },
+    { id: 'blood-group', name: 'فصيلة الدم', icon: 'droplet', desc: 'Blood Group & Rh Factor' },
+    { id: 'coagulation', name: 'تخثر الدم', icon: 'activity', desc: 'Coagulation Tests - PT/INR, PTT' },
+    { id: 'crp', name: 'بروتين سي التفاعلي', icon: 'shield', desc: 'CRP - C-Reactive Protein' },
+    { id: 'esr', name: 'معدل الترسيب', icon: 'activity', desc: 'ESR - Erythrocyte Sedimentation Rate' },
+    { id: 'hepatitis', name: 'التهاب الكبد', icon: 'shield', desc: 'Hepatitis B & C Screening' },
+    { id: 'hiv', name: 'فيروس نقص المناعة', icon: 'shield', desc: 'HIV Screening' },
+    { id: 'pregnancy', name: 'اختبار الحمل', icon: 'heart', desc: 'Pregnancy Test - hCG' },
+    { id: 'other', name: 'فحص آخر', icon: 'plus', desc: 'Other Test (Please Specify)' }
 ];
-
 // Initialize Application
 document.addEventListener('DOMContentLoaded', () => {
     initializeTests();
     updateNavState();
     feather.replace();
 });
-
 // Navigation Function
 function navigateTo(screenName) {
     // Hide all screens
@@ -53,12 +74,11 @@ function navigateTo(screenName) {
     
     // Special handling for bookings screen
     if (screenName === 'bookings') {
-        renderBookings();
+        renderBookings(false);
     }
     
     feather.replace();
 }
-
 // Update Navigation Active State
 function updateNavState() {
     document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -117,7 +137,6 @@ function selectTest(test) {
     selectedCard.querySelector('.selection-indicator div').classList.add('opacity-100');
     
     state.selectedTest = test;
-    
     // Handle "Other" option specially
     if (test.id === 'other') {
         document.getElementById('other-test-container').classList.remove('hidden');
@@ -131,7 +150,6 @@ function selectTest(test) {
         }, 400);
     }
 }
-
 // Confirm Other Test
 function confirmOtherTest() {
     const input = document.getElementById('other-test-input');
@@ -143,11 +161,10 @@ function confirmOtherTest() {
         return;
     }
     
-    state.selectedTest = { ...state.selectedTest, name: `Other: ${value}`, customValue: value };
+    state.selectedTest = { ...state.selectedTest, name: `فحص آخر: ${value}`, customValue: value };
     navigateTo('customer-data');
     document.getElementById('selected-test-display').textContent = value;
 }
-
 // Handle Form Submission
 async function handleSubmit(event) {
     event.preventDefault();
@@ -265,20 +282,34 @@ function saveBooking(booking) {
     state.bookings.unshift(booking);
     localStorage.setItem('ntrc_bookings', JSON.stringify(state.bookings));
 }
-
 // Render Bookings List
-function renderBookings() {
+function renderBookings(showSuccess = false) {
     const list = document.getElementById('bookings-list');
     const emptyState = document.getElementById('empty-bookings');
+    const successNotification = document.getElementById('booking-success-notification');
     
     if (state.bookings.length === 0) {
         list.innerHTML = '';
         emptyState.classList.remove('hidden');
+        if (successNotification) successNotification.classList.add('hidden');
         return;
     }
     
     emptyState.classList.add('hidden');
     list.innerHTML = '';
+    
+    // Show success notification if requested
+    if (successNotification) {
+        if (showSuccess) {
+            successNotification.classList.remove('hidden');
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                successNotification.classList.add('hidden');
+            }, 5000);
+        } else {
+            successNotification.classList.add('hidden');
+        }
+    }
     
     state.bookings.forEach((booking, index) => {
         const card = document.createElement('div');
@@ -324,6 +355,14 @@ function renderBookings() {
     feather.replace();
 }
 
+// Navigate to bookings with success message
+function navigateToBookingsWithSuccess() {
+    navigateTo('bookings');
+    // Wait for render then show success
+    setTimeout(() => {
+        renderBookings(true);
+    }, 100);
+}
 // Reset and Go Home
 function resetAndGoHome() {
     state.selectedTest = null;

@@ -55,7 +55,6 @@
                             <i data-feather="activity" class="w-16 h-16 text-primary"></i>
                         </div>
                     </div>
-                    
                     <!-- Center Name -->
                     <div class="space-y-2">
                         <h1 class="text-2xl font-bold text-primary leading-tight">
@@ -66,8 +65,16 @@
                         </p>
                         <div class="w-16 h-1 bg-primary mx-auto rounded-full mt-4"></div>
                     </div>
-                    
-                    <!-- Welcome Text -->
+                    <!-- Center Logo -->
+                    <div class="flex justify-center">
+                        <div class="w-24 h-24 rounded-full flex items-center justify-center border-4 border-primary/20 overflow-hidden bg-white shadow-lg">
+                            <img src="https://huggingface.co/spaces/Gask1264/ntrc-labflow-pro/resolve/main/images/logo.jpg" 
+                                 alt="شعار المركز التقني للأبحاث" 
+                                 class="w-full h-full object-cover"
+                                 onerror="this.style.display='none'; this.parentElement.innerHTML='<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'#1e3a8a\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z\'></path><polyline points=\'3.27 6.96 12 12.01 20.73 6.96\'></polyline><line x1=\'12\' y1=\'22.08\' x2=\'12\' y2=\'12\'></line></svg>';">
+                        </div>
+                    </div>
+<!-- Welcome Text -->
                     <p class="text-gray-600 text-sm leading-relaxed max-w-xs mx-auto px-4">
                         مرحبًا بكم في المركز التقني للأبحاث – الجامعة التقنية الشمالية
                     </p>
@@ -92,21 +99,18 @@
                         <h2 class="text-2xl font-bold text-primary mb-2">اختر نوع الفحص</h2>
                         <p class="text-gray-500 text-sm">Laboratory Tests</p>
                     </div>
-                    
                     <!-- Category Card -->
                     <div class="bg-accent/30 border border-primary/10 rounded-2xl p-4 mb-6">
                         <div class="flex items-center gap-3 text-primary font-bold">
                             <i data-feather="folder" class="w-5 h-5"></i>
-                            <span>Laboratory Tests</span>
+                            <span>الفحوصات المخبرية</span>
                         </div>
                     </div>
-                    
                     <!-- Tests Grid -->
-                    <div class="grid grid-cols-1 gap-3" id="tests-container">
+                    <div class="grid grid-cols-1 gap-3 max-h-[60vh] overflow-y-auto pb-4" id="tests-container">
                         <!-- Test Items Generated via JS -->
                     </div>
-                    
-                    <!-- Other Test Input (Hidden by default) -->
+<!-- Other Test Input (Hidden by default) -->
                     <div id="other-test-container" class="hidden mt-4 animate-slide-down">
                         <label class="block text-sm font-medium text-gray-700 mb-2">حدد نوع الفحص الآخر</label>
                         <input type="text" id="other-test-input" 
@@ -206,9 +210,8 @@
                         </p>
                         <p class="text-primary font-bold text-lg">شكرًا لتعاونكم</p>
                     </div>
-                    
                     <div class="space-y-3 w-full max-w-xs pt-6">
-                        <button onclick="navigateTo('bookings')" 
+                        <button onclick="navigateToBookingsWithSuccess()" 
                                 class="w-full bg-primary text-white py-3 rounded-xl font-medium hover:bg-blue-800 transition-colors flex items-center justify-center gap-2">
                             <i data-feather="list" class="w-5 h-5"></i>
                             <span>عرض حجوزاتي</span>
@@ -220,7 +223,7 @@
                             <span>طلب فحص جديد</span>
                         </button>
                     </div>
-                </div>
+</div>
             </section>
 
             <!-- Screen 5: My Bookings -->
@@ -233,7 +236,6 @@
                         <h2 class="text-2xl font-bold text-primary">حجوزاتي</h2>
                         <p class="text-gray-500 text-sm mt-2">سجل طلباتك السابقة</p>
                     </div>
-                    
                     <!-- Empty State -->
                     <div id="empty-bookings" class="text-center py-12 hidden">
                         <i data-feather="inbox" class="w-16 h-16 text-gray-300 mx-auto mb-4"></i>
@@ -245,7 +247,19 @@
                         <!-- Bookings injected here -->
                     </div>
                     
-                    <button onclick="navigateTo('welcome')" 
+                    <!-- Success Notification -->
+                    <div id="booking-success-notification" class="hidden mt-4 bg-green-50 border border-green-200 rounded-xl p-4 animate-slide-down">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-feather="check-circle" class="w-6 h-6 text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-green-800">تم تثبيت الحجز بنجاح</h4>
+                                <p class="text-sm text-green-600">سيتم التواصل معك قريباً لتأكيد الموعد</p>
+                            </div>
+                        </div>
+                    </div>
+<button onclick="navigateTo('welcome')" 
                             class="w-full mt-8 bg-gray-100 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
                         <i data-feather="home" class="w-5 h-5"></i>
                         <span>العودة للرئيسية</span>
@@ -287,5 +301,6 @@
     <script src="components/app-header.js"></script>
     <script src="script.js"></script>
     <script>feather.replace();</script>
+<script src="https://huggingface.co/deepsite/deepsite-badge.js"></script>
 </body>
 </html>
